@@ -8,7 +8,7 @@ export const roomSchema = z.object({
     .transform((num) => Number(num))
     .refine(
       (num) => Number.isInteger(num),
-      "Capacidade deve ser um número inteiro"
+      "A capacidade deve ser um número inteiro"
     )
     .refine((num) => num > 0, "A capacidade deve ser maior que zero"),
   localizacao: z

@@ -3,6 +3,7 @@ import { Toaster } from "sonner"
 function AppToaster() {
   return (
     <Toaster
+      data-testid="app-toaster"
       position="top-right"
       toastOptions={{
         className:
