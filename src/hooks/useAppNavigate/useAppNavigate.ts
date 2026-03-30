@@ -1,20 +1,26 @@
-import { useNavigate } from 'react-router-dom';
-import { ROUTES } from "@/utils/constants/routes";
+import { useNavigate } from "react-router-dom"
+import { ROUTES } from "@/utils/constants/routes"
 
 interface AppNavigate {
-  toHome: () => void;
-};
+  toHome: () => void
+  toRoomCreate: () => void
+}
 
 function useAppNavigate(): AppNavigate {
   const navigate = useNavigate()
 
   function toHome(): void {
-    navigate(ROUTES.HOME);
+    navigate(ROUTES.HOME)
+  }
+
+  function toRoomCreate(): void {
+    navigate(ROUTES.CREATE_ROOM)
   }
 
   return {
     toHome,
-  };
+    toRoomCreate,
+  }
 }
 
-export default useAppNavigate;
+export default useAppNavigate

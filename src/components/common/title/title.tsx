@@ -1,9 +1,9 @@
 interface TitleProps {
-  text: string;
+  text: string
 }
 
 function Title({ text }: TitleProps) {
-  return <h1 className="font-bold text-4xl text-center">{text}</h1>
+  return <h1 className="mb-6 text-center text-4xl font-bold">{text}</h1>
 }
 
 export default Title
