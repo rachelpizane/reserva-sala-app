@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest"
-import FormField from "./form-field"
+import FormField from "./app-input"
 import userEvent from "@testing-library/user-event"
 import { screen } from "@testing-library/react"
 import { renderWithForm } from "@/tests/providers/room-form-render"

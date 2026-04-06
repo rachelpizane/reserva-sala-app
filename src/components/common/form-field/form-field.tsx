@@ -1,49 +1,24 @@
 import { Field, FieldError, FieldLabel } from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
-import type { InputHTMLAttributes } from "react"
-import {
-  Controller,
-  useFormContext,
-  type FieldValues,
-  type Path,
-} from "react-hook-form"
-
-interface FormFieldProps<
-  T extends FieldValues,
-> extends InputHTMLAttributes<HTMLInputElement> {
+import type { FieldError as RHFFieldError } from "react-hook-form"
+interface FormFieldProps {
   label: string
-  name: Path<T>
+  name: string
   required?: boolean
+  error?: RHFFieldError
+  children: React.ReactNode
 }
 
-function FormField<T extends FieldValues>({
-  label,
-  name,
-  required,
-  ...inputProps
-}: FormFieldProps<T>) {
-  const { control } = useFormContext()
-
+function FormField({ label, name, required, error, children }: FormFieldProps) {
   return (
-    <Controller
-      name={name}
-      control={control}
-      render={({ field, fieldState }) => (
-        <Field data-invalid={fieldState.invalid} className="min-h-30">
-          <FieldLabel htmlFor={name}>
-            {label} {required && <span className="text-destructive">*</span>}
-          </FieldLabel>
-          <Input
-            {...field}
-            {...inputProps}
-            id={name}
-            aria-invalid={fieldState.invalid}
-            className="rounded-lg border-indigo-900 bg-neutral-100 px-4 py-6 shadow-md focus-visible:ring-indigo-300"
-          />
-          {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
-        </Field>
-      )}
-    />
+    <Field data-invalid={!!error} className="min-h-30">
+      <FieldLabel htmlFor={name}>
+        {label} {required && <span className="text-destructive">*</span>}
+      </FieldLabel>
+
+      {children}
+
+      {error && <FieldError errors={[error]} />}
+    </Field>
   )
 }
 

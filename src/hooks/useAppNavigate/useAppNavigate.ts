@@ -4,6 +4,7 @@ import { ROUTES } from "@/utils/constants/routes"
 interface AppNavigate {
   toHome: () => void
   toRoomCreate: () => void
+  toReservationCreate: () => void
 }
 
 function useAppNavigate(): AppNavigate {
@@ -17,9 +18,14 @@ function useAppNavigate(): AppNavigate {
     navigate(ROUTES.CREATE_ROOM)
   }
 
+  function toReservationCreate(): void {
+    navigate(ROUTES.CREATE_RESERVATION)
+  }
+
   return {
     toHome,
     toRoomCreate,
+    toReservationCreate,
   }
 }
 

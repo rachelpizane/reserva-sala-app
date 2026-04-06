@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query"
-import type { RoomSchema } from "@/pages/types/room.schema"
 import { createRoom } from "./room.service"
+import type { RoomSchema } from "@/types/room.schema"
 
 export function useCreateRoom() {
   return useMutation({
