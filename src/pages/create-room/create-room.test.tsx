@@ -1,12 +1,12 @@
 import { mockNavigate } from "../../tests/mocks/router-dom.mock"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import CreateRoom from "./create-room"
-import { renderWithForm } from "@/tests/providers/room-form-render"
-import { screen, waitFor } from "@testing-library/react"
+import { act, screen, waitFor } from "@testing-library/react"
 import userEvent, { type UserEvent } from "@testing-library/user-event"
 import { toast } from "sonner"
 import { ROUTES } from "@/utils/constants/routes"
 import type { RoomSchema } from "@/types/room.schema"
+import { renderWithRoomForm } from "@/tests/providers/render.utils"
 
 const mutateMock = vi.fn()
 let isPendingMock = false
@@ -40,7 +40,7 @@ describe(CreateRoom.name, () => {
 
   describe("renderização básica", () => {
     it("deve renderizar os campos do formulário", () => {
-      renderWithForm(<CreateRoom />)
+      renderWithRoomForm(<CreateRoom />)
 
       const fields = ["Nome", "Capacidade", "Localização", "Descrição"]
 
@@ -56,7 +56,7 @@ describe(CreateRoom.name, () => {
     })
 
     it("deve renderizar o botão desabilitado por padrão", () => {
-      renderWithForm(<CreateRoom />)
+      renderWithRoomForm(<CreateRoom />)
       const button = screen.getByRole("button", { name: /cadastrar/i })
 
       expect(button).toBeDisabled()
@@ -73,7 +73,7 @@ describe(CreateRoom.name, () => {
     it("deve mostrar erro quando nome estiver vazio", async () => {
       const user = userEvent.setup()
 
-      renderWithForm(<CreateRoom />)
+      renderWithRoomForm(<CreateRoom />)
 
       const nomeInput = screen.getByLabelText(/nome/i)
 
@@ -90,7 +90,7 @@ describe(CreateRoom.name, () => {
       async (valor, erroEsperado) => {
         const user = userEvent.setup()
 
-        renderWithForm(<CreateRoom />)
+        renderWithRoomForm(<CreateRoom />)
 
         const capacidadeInput = screen.getByLabelText(/capacidade/i)
 
@@ -112,7 +112,7 @@ describe(CreateRoom.name, () => {
   describe("Estados", () => {
     it("deve habilitar o botão quando o formulário for válido", async () => {
       const user = userEvent.setup()
-      renderWithForm(<CreateRoom />)
+      renderWithRoomForm(<CreateRoom />)
 
       const nomeInput = screen.getByLabelText(/nome/i)
       const capacidadeInput = screen.getByLabelText(/capacidade/i)
@@ -129,7 +129,7 @@ describe(CreateRoom.name, () => {
     it("deve mostrar spinner quando isPending for true", () => {
       isPendingMock = true
 
-      renderWithForm(<CreateRoom />)
+      renderWithRoomForm(<CreateRoom />)
 
       const spinner = document.querySelector('[data-icon="inline-start"]')
 
@@ -145,7 +145,7 @@ describe(CreateRoom.name, () => {
     })
 
     it("deve chamar mutate com os dados corretos ao submeter", async () => {
-      renderWithForm(<CreateRoom />)
+      renderWithRoomForm(<CreateRoom />)
 
       const nomeInput = screen.getByLabelText(/nome/i)
       const capacidadeInput = screen.getByLabelText(/capacidade/i)
@@ -162,7 +162,7 @@ describe(CreateRoom.name, () => {
     })
 
     it("deve resetar o formulário, navegar e mostrar toast de sucesso", async () => {
-      renderWithForm(<CreateRoom />)
+      renderWithRoomForm(<CreateRoom />)
 
       const nomeInput = screen.getByLabelText(/nome/i)
       const capacidadeInput = screen.getByLabelText(/capacidade/i)
@@ -176,8 +176,10 @@ describe(CreateRoom.name, () => {
 
       const mutateCall = mutateMock.mock.calls[0]
       const options = mutateCall[1]
-
-      options.onSuccess()
+      
+      act(() => {
+        options.onSuccess()
+      })
 
       expect(mockNavigate).toHaveBeenCalledWith(ROUTES.HOME)
       expect(toast.success).toHaveBeenCalledWith("Sala cadastrada com sucesso!")
@@ -189,7 +191,7 @@ describe(CreateRoom.name, () => {
     })
 
     it("deve mostrar toast de erro quando a mutation falhar", async () => {
-      renderWithForm(<CreateRoom />)
+      renderWithRoomForm(<CreateRoom />)
 
       const nomeInput = screen.getByLabelText(/nome/i)
       const capacidadeInput = screen.getByLabelText(/capacidade/i)
@@ -207,7 +209,7 @@ describe(CreateRoom.name, () => {
       options.onError()
 
       expect(toast.error).toHaveBeenCalledWith(
-        "Ocorreu um erro inesperado. Tente novamente."
+        "Ocorreu um erro inesperado. Tente novamente mais tarde."
       )
     })
   })

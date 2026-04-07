@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react"
 import { describe, expect, it } from "vitest"
 import AppRoutes from "./app-routes"
-import { renderWithProviders } from "@/tests/providers/main-render"
+import { renderWithProviders } from "@/tests/providers/render.utils"
 
 describe(AppRoutes.name, () => {
   it("deve renderizar NotFound para rota inexistente", () => {
