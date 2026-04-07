@@ -5,16 +5,20 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { format } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import { ChevronDownIcon } from "lucide-react"
 import {
   Controller,
   useFormContext,
+  type ControllerRenderProps,
   type FieldValues,
   type Path,
 } from "react-hook-form"
 import FormField from "../form-field/form-field"
+import {
+  formatarDataBrasileira,
+  getDataHoje,
+} from "@/utils/date-time/date-time.utils"
 
 interface DatePickerProps<T extends FieldValues> {
   label: string
@@ -27,9 +31,26 @@ function AppDatePicker<T extends FieldValues>({
   name,
   required,
 }: DatePickerProps<T>) {
-  const { control } = useFormContext()
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
+  const { control, trigger, formState } = useFormContext()
+
+  function handleDateSelect({
+    value,
+    field,
+  }: {
+    value: Date | undefined
+    field: ControllerRenderProps<FieldValues, Path<T>>
+  }) {
+    if (!value) {
+      field.onChange(getDataHoje())
+    } else {
+      field.onChange(value)
+    }
+
+    field.onBlur()
+    if (formState.touchedFields.inicio) {
+      trigger("inicio")
+    }
+  }
 
   return (
     <Controller
@@ -51,7 +72,7 @@ function AppDatePicker<T extends FieldValues>({
                 className="justify-between rounded-lg border-indigo-900 bg-neutral-100 px-4 py-6 text-left font-normal shadow-md data-[empty=true]:text-muted-foreground"
               >
                 {field.value
-                  ? format(field.value, "dd/MM/yyyy", { locale: ptBR })
+                  ? formatarDataBrasileira(field.value)
                   : "Selecione uma data"}
                 <ChevronDownIcon />
               </Button>
@@ -60,9 +81,9 @@ function AppDatePicker<T extends FieldValues>({
               <Calendar
                 mode="single"
                 selected={field.value}
-                onSelect={field.onChange}
-                defaultMonth={field.value ?? today}
-                disabled={{ before: today }}
+                onSelect={(value) => handleDateSelect({ value, field })}
+                defaultMonth={field.value ?? getDataHoje()}
+                disabled={{ before: getDataHoje() }}
                 locale={ptBR}
               />
             </PopoverContent>

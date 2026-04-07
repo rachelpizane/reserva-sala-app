@@ -1,4 +1,3 @@
-import { Field, FieldError, FieldLabel } from "@/components/ui/field"
 import {
   Select,
   SelectContent,
@@ -49,9 +48,20 @@ function AppSelect<T extends FieldValues>({
           required={required}
           error={fieldState.error}
         >
-          <Select onValueChange={field.onChange} value={field.value} disabled={isLoading}>
+          <Select
+            onValueChange={field.onChange}
+            onOpenChange={(open) => {
+              if (!open) {
+                field.onBlur()
+              }
+            }}
+            value={field.value}
+            disabled={isLoading}
+          >
             <SelectTrigger
               id={name}
+              ref={field.ref}
+              aria-invalid={!!fieldState.error}
               className="rounded-lg border-indigo-900 bg-neutral-100 px-4 py-6 shadow-md focus-visible:ring-indigo-300"
             >
               {isLoading ? (

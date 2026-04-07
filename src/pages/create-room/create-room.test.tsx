@@ -4,9 +4,9 @@ import CreateRoom from "./create-room"
 import { renderWithForm } from "@/tests/providers/room-form-render"
 import { screen, waitFor } from "@testing-library/react"
 import userEvent, { type UserEvent } from "@testing-library/user-event"
-import type { RoomSchema } from "../types/room.schema"
 import { toast } from "sonner"
 import { ROUTES } from "@/utils/constants/routes"
+import type { RoomSchema } from "@/types/room.schema"
 
 const mutateMock = vi.fn()
 let isPendingMock = false
