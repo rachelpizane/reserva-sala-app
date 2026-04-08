@@ -62,6 +62,7 @@ function AppSelect<T extends FieldValues>({
               id={name}
               ref={field.ref}
               aria-invalid={!!fieldState.error}
+              data-testid={`select-${name}`}
               className="rounded-lg border-indigo-900 bg-neutral-100 px-4 py-6 shadow-md focus-visible:ring-indigo-300"
             >
               {isLoading ? (
@@ -76,7 +77,11 @@ function AppSelect<T extends FieldValues>({
             <SelectContent position="popper">
               <SelectGroup>
                 {options.map((option) => (
-                  <SelectItem key={option.value} value={option.value}>
+                  <SelectItem
+                    data-testid={`select-item-${name}`}
+                    key={option.value}
+                    value={option.value}
+                  >
                     {option.label}
                   </SelectItem>
                 ))}

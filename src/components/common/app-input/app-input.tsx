@@ -38,6 +38,7 @@ function AppInput<T extends FieldValues>({
           <Input
             {...field}
             {...inputProps}
+            data-testid={`input-${name}`}
             id={name}
             aria-invalid={fieldState.invalid}
             className="rounded-lg border-indigo-900 bg-neutral-100 px-4 py-6 shadow-md focus-visible:ring-indigo-300"
