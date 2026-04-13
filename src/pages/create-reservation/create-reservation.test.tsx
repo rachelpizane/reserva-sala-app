@@ -163,7 +163,7 @@ describe(CreateReservation.name, () => {
       await submeterFormularioReserva()
 
       expect(await screen.findByText(/sucesso/i)).toBeInTheDocument()
-      expect(screen.getByText(/cadastrar reserva/i)).toBeInTheDocument()
+      expect(await screen.findByText(/cadastrar reserva/i)).toBeInTheDocument()
     })
 
     it("deve notificar com erro quando tiver conflito de horários", async () => {

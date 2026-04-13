@@ -1,4 +1,12 @@
-import { format, parse, setHours, setMinutes, setSeconds } from "date-fns"
+import {
+  addDays,
+  format,
+  parse,
+  setHours,
+  setMinutes,
+  setSeconds,
+  startOfWeek,
+} from "date-fns"
 import { ptBR } from "date-fns/locale"
 
 export function getDataHoje(): Date {
@@ -37,4 +45,21 @@ export function formatarDiaDaSemanaExtenso(data: Date): string {
 
 export function parseDataLocal(data: string): Date {
   return parse(data, "yyyy-MM-dd", new Date())
+}
+
+export function retornarInicioSemanaFormatado(dataStr: string): string {
+  const inicioSemana = startOfWeek(new Date(dataStr), {
+    weekStartsOn: 1,
+  })
+
+  inicioSemana.setHours(0, 0, 0, 0)
+  return formatarData(inicioSemana)
+}
+
+export function adicionarDias(dataStr: string, dias: number): Date {
+  return addDays(dataStr, dias)
+}
+
+export function adicionarDiasFormatado(dataStr: string, dias: number): string {
+  return formatarData(adicionarDias(dataStr, dias))
 }

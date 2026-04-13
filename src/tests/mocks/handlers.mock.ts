@@ -1,3 +1,9 @@
+import {
+  adicionarDiasFormatado,
+  formatarData,
+  getDataHoje,
+  retornarInicioSemanaFormatado,
+} from "@/utils/date-time/date-time.utils"
 import { http, HttpResponse } from "msw"
 
 export const handlers = [
@@ -24,5 +30,33 @@ export const handlers = [
         capacidade: "200",
       },
     ])
+  }),
+  http.get("*/agendas", ({ request }) => {
+    const url = new URL(request.url)
+    const data = url.searchParams.get("data") ?? formatarData(getDataHoje())
+    const dataInicioSemana = retornarInicioSemanaFormatado(data)
+    const dataFinalSemana = adicionarDiasFormatado(dataInicioSemana, 6)
+
+    return HttpResponse.json({
+      dataInicioSemana,
+      dataFinalSemana,
+      dataProximaSemana: adicionarDiasFormatado(dataInicioSemana, 7),
+      dataAnteriorSemana: adicionarDiasFormatado(dataInicioSemana, -7),
+      temProxima: true,
+      temAnterior: true,
+      agendasDiarias: [
+        {
+          data,
+          reservas: [
+            {
+              id: "50e10c4c-4ea9-4eee-8ccf-32ebef99ef4c",
+              horaInicio: "09:00",
+              horaFim: "10:00",
+              nomeSala: "Sala de Reunião 1",
+            },
+          ],
+        },
+      ],
+    })
   }),
 ]
