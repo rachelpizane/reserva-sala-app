@@ -7,6 +7,6 @@ export async function createRoom(sala: RoomSchema): Promise<void> {
 }
 
 export async function getSummaryRooms(): Promise<SummaryRoom[]> {
-  const response = await api.get("/salas");
-  return response.data;
+  const response = await api.get("/salas")
+  return response.data
 }

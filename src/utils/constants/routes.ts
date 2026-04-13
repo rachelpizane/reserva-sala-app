@@ -9,5 +9,5 @@ export const ROUTES: IRoutes = {
   HOME: "/",
   NOT_FOUND: "*",
   CREATE_ROOM: "salas/nova",
-  CREATE_RESERVATION: "reservas/nova"
+  CREATE_RESERVATION: "reservas/nova",
 }

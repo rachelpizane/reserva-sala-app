@@ -4,7 +4,7 @@ import useAppNavigate from "@/hooks/useAppNavigate/useAppNavigate"
 import { Frown } from "lucide-react"
 
 function NotFound() {
-  const {toHome } = useAppNavigate()
+  const { toHome } = useAppNavigate()
 
   return (
     <div className="flex flex-col items-center gap-8">
@@ -13,7 +13,9 @@ function NotFound() {
       <p className="text-center">
         A página que você tentou acessar não existe ou foi movida.
       </p>
-      <Button className="cursor-pointer" variant="link" onClick={toHome}>Voltar para página inicial</Button>
+      <Button className="cursor-pointer" variant="link" onClick={toHome}>
+        Voltar para página inicial
+      </Button>
     </div>
   )
 }

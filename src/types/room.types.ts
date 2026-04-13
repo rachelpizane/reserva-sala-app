@@ -1,5 +1,5 @@
 export type SummaryRoom = {
-    id: string,
-    nome: string,
-    capacidade: number
+  id: string
+  nome: string
+  capacidade: number
 }

@@ -176,7 +176,7 @@ describe(CreateRoom.name, () => {
 
       const mutateCall = mutateMock.mock.calls[0]
       const options = mutateCall[1]
-      
+
       act(() => {
         options.onSuccess()
       })

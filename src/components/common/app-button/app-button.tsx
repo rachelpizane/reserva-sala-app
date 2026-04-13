@@ -14,7 +14,7 @@ function AppButton({
     <Button
       type={type}
       className={cn(
-        "flex w-full cursor-pointer gap-3 px-10 py-8 text-lg font-semibold shadow-md shadow-neutral-300 duration-200 hover:bg-indigo-600 disabled:bg-indigo-500 disabled:text-indigo-300 md:w-auto",
+        "flex w-full cursor-pointer gap-3 px-8 py-7 text-lg font-semibold shadow-md shadow-neutral-300 duration-200 hover:bg-indigo-600 disabled:bg-indigo-500 disabled:text-indigo-300 md:w-auto",
         className
       )}
       {...props}

@@ -131,7 +131,7 @@ describe(CreateReservation.name, () => {
         ).toBeInTheDocument()
       }
     )
-    
+
     it("deve mostrar erro quando horário final estiver anterior ao inicial", async () => {
       renderWithReservationForm(<CreateReservation />)
       const inputInicial = screen.getByTestId(campos.horarioInicial.testId)

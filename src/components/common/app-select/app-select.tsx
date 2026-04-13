@@ -13,7 +13,8 @@ import {
   type Path,
 } from "react-hook-form"
 import FormField from "../form-field/form-field"
-import { FilmIcon, Loader2 } from "lucide-react"
+import { Loader2 } from "lucide-react"
+import type { Option } from "@/types/option.types"
 
 interface SelectProps<T extends FieldValues> {
   label: string
@@ -21,10 +22,7 @@ interface SelectProps<T extends FieldValues> {
   placeholder: string
   required?: boolean
   isLoading: boolean
-  options: {
-    value: string
-    label: string
-  }[]
+  options: Option[]
 }
 
 function AppSelect<T extends FieldValues>({

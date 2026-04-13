@@ -12,7 +12,10 @@ export default function AppRoutes() {
       <Route path={ROUTES.HOME} element={<BaseLayout />}>
         <Route index element={<Home />} />
         <Route path={ROUTES.CREATE_ROOM} element={<CreateRoom />} />
-        <Route path={ROUTES.CREATE_RESERVATION} element={<CreateReservation />} />
+        <Route
+          path={ROUTES.CREATE_RESERVATION}
+          element={<CreateReservation />}
+        />
         <Route path={ROUTES.NOT_FOUND} element={<NotFound />} />
       </Route>
     </Routes>

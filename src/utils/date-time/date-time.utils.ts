@@ -1,4 +1,4 @@
-import { format, setHours, setMinutes, setSeconds } from "date-fns"
+import { format, parse, setHours, setMinutes, setSeconds } from "date-fns"
 import { ptBR } from "date-fns/locale"
 
 export function getDataHoje(): Date {
@@ -24,4 +24,17 @@ export function formatarDataDetalhada(data: Date): string {
 
 export function formatarDataBrasileira(data: Date): string {
   return format(data, "dd/MM/yyyy", { locale: ptBR })
+}
+
+export function formatarData(data: Date): string {
+  return format(data, "yyyy-MM-dd")
+}
+
+export function formatarDiaDaSemanaExtenso(data: Date): string {
+  const nome = format(data, "EEEE", { locale: ptBR })
+  return nome.charAt(0).toUpperCase() + nome.slice(1).replace("-feira", "")
+}
+
+export function parseDataLocal(data: string): Date {
+  return parse(data, "yyyy-MM-dd", new Date())
 }

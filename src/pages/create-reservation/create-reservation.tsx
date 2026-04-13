@@ -17,8 +17,10 @@ import AppInput from "@/components/common/app-input/app-input"
 import { useCreateReservation } from "@/services/reservation/reservation.mutation"
 import { mapToReservationRequest } from "@/mapper/reservation.mapper"
 import { useRoomOptions } from "@/hooks/useRoomOptions/useRoomOptions"
+import { useQueryClient } from "@tanstack/react-query"
 
 function CreateReservation() {
+  const queryClient = useQueryClient()
   const { toHome } = useAppNavigate()
   const { options, isLoading } = useRoomOptions()
   const { mutate, isPending } = useCreateReservation()
@@ -34,6 +36,9 @@ function CreateReservation() {
 
     mutate(payload, {
       onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ["agendas-semanais"],
+        })
         methods.reset()
         toHome()
         toast.success("Reserva cadastrada com sucesso!")
