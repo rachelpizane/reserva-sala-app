@@ -1,5 +1,6 @@
 import { useRooms } from "@/services/room/room.queries"
 import type { Option } from "@/types/option.types"
+import { truncate } from "@/utils/text/text.utils"
 
 interface RoomOptions {
   options: Option[]
@@ -12,7 +13,7 @@ export function useRoomOptions(): RoomOptions {
   const options: Option[] =
     data?.map((sala) => ({
       value: String(sala.id),
-      label: `${sala.nome} (${sala.capacidade} pessoas)`,
+      label: `${truncate(sala.nome, 30)} (${sala.capacidade} pessoas)`,
     })) ?? []
 
   return {

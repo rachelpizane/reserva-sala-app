@@ -63,3 +63,11 @@ export function adicionarDias(dataStr: string, dias: number): Date {
 export function adicionarDiasFormatado(dataStr: string, dias: number): string {
   return formatarData(adicionarDias(dataStr, dias))
 }
+
+export function formatarDataExtenso(data: Date): string {
+  return format(data, "d 'de' MMMM 'de' yyyy", { locale: ptBR })
+}
+
+export function formatarHora(data: Date): string {
+  return format(data, "HH:mm")
+}

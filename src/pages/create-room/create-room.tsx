@@ -14,6 +14,7 @@ import { FormProvider, useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useCreateRoom } from "@/services/room/room.mutation"
 import { toast } from "sonner"
+import { showErrorToast } from "@/utils/show-toast/show-toast.utils"
 
 function CreateRoom() {
   const { toHome } = useAppNavigate()
@@ -33,7 +34,7 @@ function CreateRoom() {
         toast.success("Sala cadastrada com sucesso!")
       },
       onError: () => {
-        toast.error("Ocorreu um erro inesperado. Tente novamente mais tarde.")
+        showErrorToast()
       },
     })
   }

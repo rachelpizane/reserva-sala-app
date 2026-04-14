@@ -18,6 +18,7 @@ import { useCreateReservation } from "@/services/reservation/reservation.mutatio
 import { mapToReservationRequest } from "@/mapper/reservation.mapper"
 import { useRoomOptions } from "@/hooks/useRoomOptions/useRoomOptions"
 import { useQueryClient } from "@tanstack/react-query"
+import { showErrorToast } from "@/utils/show-toast/show-toast.utils"
 
 function CreateReservation() {
   const queryClient = useQueryClient()
@@ -47,20 +48,20 @@ function CreateReservation() {
     })
   }
 
-  function handleReservationError(err: any) {
+  function handleReservationError(err: any): void {
     const backendError = err?.response?.data ?? err
 
     if (backendError.tipoErro === "CONFLITO_HORARIO") {
-      backendError.mensagens.forEach((msg: string) => toast.error(msg))
+      backendError.mensagens.forEach((msg: string) => showErrorToast(msg))
       return
     }
 
     if (backendError.tipoErro === "NAO_ENCONTRADO") {
-      toast.error("Sala não encontrada. Tente reservar outra sala")
+      showErrorToast("Sala não encontrada. Tente reservar outra sala.")
       return
     }
 
-    toast.error("Ocorreu um erro inesperado. Tente novamente mais tarde.")
+    showErrorToast()
   }
 
   return (
