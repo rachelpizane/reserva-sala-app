@@ -19,6 +19,8 @@ export default defineConfig({
       reporter: ["text", "json", "html"],
       include: ["src/**/*.{ts,tsx}"],
       exclude: [
+        "src/components/ui/**",
+        "src/routes/**",
         "**/*.mock.{ts,tsx}",
         "src/services/api.ts",
         "src/main.tsx",

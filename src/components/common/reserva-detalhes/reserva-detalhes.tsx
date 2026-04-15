@@ -13,12 +13,10 @@ import {
 } from "lucide-react"
 
 interface ReservaDetalhesProps {
-  reservaDetalhada: ReservaDetalhesType | undefined
+  reserva: ReservaDetalhesType
 }
 
-function ReservaDetalhes({ reservaDetalhada }: ReservaDetalhesProps) {
-  if (!reservaDetalhada) return <div>Reserva não encontrada</div>
-
+function ReservaDetalhes({ reserva }: ReservaDetalhesProps) {
   return (
     <article className="mt-2 flex w-full flex-col justify-center gap-5 py-6 md:p-4">
       <div className="flex flex-col gap-2 md:flex-row md:gap-5">
@@ -27,26 +25,26 @@ function ReservaDetalhes({ reservaDetalhada }: ReservaDetalhesProps) {
         </span>
         <div className="flex items-center justify-center gap-2 font-medium">
           <CalendarDays />
-          <p> {formatarDataExtenso(new Date(reservaDetalhada.inicio))}</p>
+          <p> {formatarDataExtenso(new Date(reserva.inicio))}</p>
         </div>
         <div className="flex items-center justify-center gap-2 font-medium">
           <Clock3 />
           <p>
-            {formatarHora(new Date(reservaDetalhada.inicio))} -{" "}
-            {formatarHora(new Date(reservaDetalhada.fim))}
+            {formatarHora(new Date(reserva.inicio))} -{" "}
+            {formatarHora(new Date(reserva.fim))}
           </p>
         </div>
       </div>
 
       <h2 className="my-2 text-center text-4xl font-medium md:my-5">
-        {reservaDetalhada.sala.nome}
+        {reserva.sala.nome}
       </h2>
 
       <div className="flex w-full items-center gap-5 rounded-sm bg-indigo-500 px-6 py-4 text-lg text-white">
         <ContactRound size={60} />
         <div>
           <h3 className="font-extralight">Organizado por:</h3>
-          <p className="font-medium">{reservaDetalhada.organizador}</p>
+          <p className="font-medium">{reserva.organizador}</p>
         </div>
       </div>
 
@@ -54,8 +52,8 @@ function ReservaDetalhes({ reservaDetalhada }: ReservaDetalhesProps) {
         <div className="flex flex-1 items-center gap-3 tracking-wide text-slate-700">
           <MapPin size={28} />
 
-          {reservaDetalhada.sala.localizacao ? (
-            <p>{reservaDetalhada.sala.localizacao}</p>
+          {reserva.sala.localizacao ? (
+            <p>{reserva.sala.localizacao}</p>
           ) : (
             <p className="text-gray-400 italic">(Localização não informada)</p>
           )}
@@ -63,7 +61,7 @@ function ReservaDetalhes({ reservaDetalhada }: ReservaDetalhesProps) {
 
         <div className="flex items-center justify-center gap-4 rounded-sm border-l-8 border-indigo-800 bg-indigo-50 py-3 text-lg font-medium shadow-md md:px-6">
           <Users />
-          <p>{reservaDetalhada.sala.capacidade} pessoas</p>
+          <p>{reserva.sala.capacidade} pessoas</p>
         </div>
       </div>
       <div className="flex flex-col gap-2 leading-relaxed tracking-wide">
@@ -72,8 +70,8 @@ function ReservaDetalhes({ reservaDetalhada }: ReservaDetalhesProps) {
           <h3>Descrição da Sala</h3>
         </div>
 
-        {reservaDetalhada.sala.descricao ? (
-          <p>{reservaDetalhada.sala.descricao}</p>
+        {reserva.sala.descricao ? (
+          <p>{reserva.sala.descricao}</p>
         ) : (
           <p className="text-gray-400 italic">(Descrição não informada)</p>
         )}

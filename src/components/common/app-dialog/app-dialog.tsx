@@ -1,4 +1,10 @@
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import type { ReactNode } from "react"
 
 interface AppDialogProps extends React.ComponentProps<typeof Dialog> {
@@ -13,7 +19,13 @@ export function AppDialog({
 }: AppDialogProps) {
   return (
     <Dialog {...props}>
-      <DialogTitle className="sr-only">Detalhes da Reserva</DialogTitle>
+      <DialogHeader>
+        <DialogTitle className="sr-only">Detalhes da Reserva</DialogTitle>
+        <DialogDescription className="sr-only">
+          Informações detalhadas sobre a reserva selecionada.
+        </DialogDescription>
+      </DialogHeader>
+
       <DialogContent className={contentClassName}>{children}</DialogContent>
     </Dialog>
   )

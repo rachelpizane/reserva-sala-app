@@ -1,3 +1,4 @@
+import { BASE_URL } from "@/utils/constants/api-config"
 import {
   adicionarDiasFormatado,
   formatarData,
@@ -6,8 +7,12 @@ import {
 } from "@/utils/date-time/date-time.utils"
 import { http, HttpResponse } from "msw"
 
+export function apiUrl(path: string) {
+  return new URL(path, BASE_URL).href
+}
+
 export const handlers = [
-  http.post("*/reservas", async ({ request }) => {
+  http.post(apiUrl("/reservas"), async ({ request }) => {
     const data = await request.json()
     return HttpResponse.json(
       {
@@ -17,7 +22,24 @@ export const handlers = [
       { status: 201 }
     )
   }),
-  http.get("*/salas", () => {
+  http.get(apiUrl("/reservas/:id"), ({ params }) => {
+    const { id } = params
+
+    return HttpResponse.json({
+      id,
+      inicio: "2026-04-14T09:00:00",
+      fim: "2026-04-14T10:00:00",
+      organizador: "João da Silva",
+      sala: {
+        id: "21181886-5cb3-49e5-943b-9582154c3b68",
+        nome: "Sala de Reunião 1",
+        capacidade: 10,
+        localizacao: "Andar 2, Ala B",
+        descricao: "Sala equipada com projetor e ar-condicionado.",
+      },
+    })
+  }),
+  http.get(apiUrl("/salas"), () => {
     return HttpResponse.json([
       {
         id: "21181886-5cb3-49e5-943b-9582154c3b68",
@@ -31,7 +53,7 @@ export const handlers = [
       },
     ])
   }),
-  http.get("*/agendas", ({ request }) => {
+  http.get(apiUrl("/agendas"), ({ request }) => {
     const url = new URL(request.url)
     const data = url.searchParams.get("data") ?? formatarData(getDataHoje())
     const dataInicioSemana = retornarInicioSemanaFormatado(data)

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react"
 import { useReserva } from "@/services/reservation/reserva.querie"
 import type { ReservaDetalhes as ReservaDetalhesType } from "@/types/reservation.types"
 import { showErrorToast } from "@/utils/show-toast/show-toast.utils"
+import { Button } from "@/components/ui/button"
 
 interface AgendaItemProps {
   agendaReserva: AgendaReserva
@@ -41,14 +42,14 @@ function AgendaItem({ agendaReserva }: AgendaItemProps) {
 
   return (
     <>
-      <div
+      <Button
         onClick={() => setShouldFetch(true)}
-        className="flex cursor-pointer flex-col gap-1 rounded-md bg-gray-200 px-3 py-2 break-all shadow-gray-400 duration-300 hover:shadow-md"
+        className="flex h-fit cursor-pointer flex-col items-stretch gap-1 rounded-md bg-gray-200 px-3 py-2 break-all text-gray-900 shadow-gray-400 duration-300 hover:shadow-md"
       >
-        <div className="text-xs">
+        <div className="self-start text-xs">
           {agendaReserva.horaInicio} - {agendaReserva.horaFim}
         </div>
-        <div className="flex items-center justify-between gap-2 border-2">
+        <div className="flex items-center justify-between gap-2">
           <p className="truncate overflow-hidden font-medium whitespace-nowrap">
             {agendaReserva.nomeSala}
           </p>
@@ -60,13 +61,13 @@ function AgendaItem({ agendaReserva }: AgendaItemProps) {
             )}
           </span>
         </div>
-      </div>
+      </Button>
       <AppDialog
         open={open}
         onOpenChange={handleOpenChange}
         contentClassName="sm:max-w-2xl"
       >
-        <ReservaDetalhes reservaDetalhada={reserva} />
+        {reserva && <ReservaDetalhes reserva={reserva} />}
       </AppDialog>
     </>
   )
