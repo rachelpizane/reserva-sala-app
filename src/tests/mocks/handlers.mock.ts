@@ -1,10 +1,10 @@
-import { BASE_URL } from "@/utils/constants/api-config"
+import { BASE_URL } from "@/constants/api-config"
 import {
-  adicionarDiasFormatado,
-  formatarData,
-  getDataHoje,
-  retornarInicioSemanaFormatado,
-} from "@/utils/date-time/date-time.utils"
+  addDaysToDateFormatted,
+  formatDate,
+  getFormattedWeekStart,
+  getTodayDate,
+} from "@/utils/date"
 import { http, HttpResponse } from "msw"
 
 export function apiUrl(path: string) {
@@ -55,15 +55,15 @@ export const handlers = [
   }),
   http.get(apiUrl("/agendas"), ({ request }) => {
     const url = new URL(request.url)
-    const data = url.searchParams.get("data") ?? formatarData(getDataHoje())
-    const dataInicioSemana = retornarInicioSemanaFormatado(data)
-    const dataFinalSemana = adicionarDiasFormatado(dataInicioSemana, 6)
+    const data = url.searchParams.get("data") ?? formatDate(getTodayDate())
+    const dataInicioSemana = getFormattedWeekStart(data)
+    const dataFinalSemana = addDaysToDateFormatted(dataInicioSemana, 6)
 
     return HttpResponse.json({
       dataInicioSemana,
       dataFinalSemana,
-      dataProximaSemana: adicionarDiasFormatado(dataInicioSemana, 7),
-      dataAnteriorSemana: adicionarDiasFormatado(dataInicioSemana, -7),
+      dataProximaSemana: addDaysToDateFormatted(dataInicioSemana, 7),
+      dataAnteriorSemana: addDaysToDateFormatted(dataInicioSemana, -7),
       temProxima: true,
       temAnterior: true,
       agendasDiarias: [

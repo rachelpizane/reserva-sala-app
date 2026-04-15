@@ -1,6 +1,6 @@
-import AppButton from "@/components/common/app-button/app-button"
-import CarrosselAgendas from "@/components/common/carrossel-agendas/carrossel-agendas"
-import useAppNavigate from "@/hooks/useAppNavigate/useAppNavigate"
+import AppButton from "@/components/common/app-button/AppButton"
+import CarrosselAgendas from "@/features/schedule/components/schedule-carousel/ScheduleCarousel"
+import useAppNavigate from "@/hooks/app-navigate/useAppNavigate"
 import { Bookmark, CirclePlus } from "lucide-react"
 
 function Home() {

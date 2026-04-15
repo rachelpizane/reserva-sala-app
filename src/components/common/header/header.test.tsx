@@ -1,8 +1,8 @@
 import { mockNavigate } from "../../../tests/mocks/router-dom.mock"
 import { fireEvent, render, screen } from "@testing-library/react"
 import { describe, expect, it, vi } from "vitest"
-import Header from "./header"
-import { ROUTES } from "@/utils/constants/routes"
+import Header from "./Header"
+import { ROUTES } from "@/constants/routes"
 
 describe(Header.name, () => {
   it("deve navegar para página inicial ao clicar no ícone do calendário", () => {

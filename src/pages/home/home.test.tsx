@@ -1,16 +1,13 @@
 import { describe, expect, it } from "vitest"
-import Home from "./home"
+import Home from "./Home"
 import { renderWithProviders } from "@/tests/providers/render.utils"
 import { screen } from "@testing-library/react"
-import {
-  formatarDataBrasileira,
-  getDataHoje,
-} from "@/utils/date-time/date-time.utils"
 import { server } from "@/tests/mocks/server.mock"
 import { http, HttpResponse } from "msw"
 import App from "@/App"
 import userEvent from "@testing-library/user-event"
 import { apiUrl } from "@/tests/mocks/handlers.mock"
+import { formatBrazilianDate, getTodayDate } from "@/utils/date"
 
 describe(Home.name, () => {
   describe("Renderização inicial", () => {
@@ -38,7 +35,7 @@ describe(Home.name, () => {
       renderWithProviders(<Home />)
 
       expect(
-        await screen.findByText(formatarDataBrasileira(getDataHoje()))
+        await screen.findByText(formatBrazilianDate(getTodayDate()))
       ).toBeInTheDocument()
 
       expect(await screen.findByText(/Sala de Reunião 1/i)).toBeInTheDocument()

@@ -2,7 +2,7 @@ import {
   defaultValues as reservationDefaultValues,
   reservationSchema,
   type ReservationSchema,
-} from "@/types/reservation.schema"
+} from "@/features/reservation/schemas/reservation.schema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { render } from "@testing-library/react"
 import { FormProvider, useForm } from "react-hook-form"
@@ -12,7 +12,7 @@ import {
   roomSchema,
   type RoomFormValues,
   type RoomSchema,
-} from "@/types/room.schema"
+} from "@/features/room/schemas/room.schema"
 
 interface FormProviderProps {
   children: React.ReactNode

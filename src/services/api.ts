@@ -1,4 +1,4 @@
-import { BASE_URL } from "@/utils/constants/api-config"
+import { BASE_URL } from "@/constants/api-config"
 import axios from "axios"
 
 export const api = axios.create({

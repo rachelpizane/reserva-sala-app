@@ -1,4 +1,4 @@
-import useAppNavigate from "@/hooks/useAppNavigate/useAppNavigate"
+import useAppNavigate from "@/hooks/app-navigate/useAppNavigate"
 import { CalendarClock } from "lucide-react"
 
 function Header() {
