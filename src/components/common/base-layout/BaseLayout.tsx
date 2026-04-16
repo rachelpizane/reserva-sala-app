@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom"
 import AppToaster from "../app-toaster/AppToaster"
-import Header from "../header/Header.tsx"
-import Footer from "../footer/Footer.tsx"
+import Header from "../header/Header"
+import Footer from "../footer/Footer"
 
 function BaseLayout() {
   return (

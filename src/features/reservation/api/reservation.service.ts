@@ -1,7 +1,7 @@
 import { api } from "../../../services/api"
 import type {
-  ReservationDetails,
   ReservationRequest,
+  ReservationResponse,
 } from "../types/reservation.types"
 
 export async function createReservation(
@@ -10,7 +10,7 @@ export async function createReservation(
   await api.post("/reservas", reserva)
 }
 
-export async function getReservation(id: string): Promise<ReservationDetails> {
+export async function getReservation(id: string): Promise<ReservationResponse> {
   const response = await api.get(`/reservas/${id}`)
   return response.data
 }

@@ -4,9 +4,7 @@ import {
   type ReservationSchema,
 } from "@/features/reservation/schemas/reservation.schema"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { render } from "@testing-library/react"
 import { FormProvider, useForm } from "react-hook-form"
-import { MainProviders } from "./main-providers"
 import {
   defaultValues as roomDefaultValues,
   roomSchema,

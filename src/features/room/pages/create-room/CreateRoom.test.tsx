@@ -8,7 +8,6 @@ import { server } from "@/tests/mocks/server.mock"
 import { apiUrl } from "@/tests/mocks/handlers.mock"
 import { http, HttpResponse } from "msw"
 import App from "@/App"
-import AppRoutes from "@/routes/AppRoutes"
 
 const mockSala: RoomSchema = {
   nome: "Sala 1",
