@@ -25,7 +25,7 @@ function ScheduleCarousel() {
   }
 
   return (
-    <div className="mx-auto md:mx-0 md:h-96 lg:h-125">
+    <div className="mx-auto max-w-full md:mx-0 md:h-96 lg:h-125">
       <Carousel
         setApi={setApi}
         className="w-full max-w-sm sm:max-w-2xl md:h-full md:max-w-full"
@@ -36,7 +36,7 @@ function ScheduleCarousel() {
             {schedule.dailySchedules.map((dailySchedule) => (
               <CarouselItem
                 key={dailySchedule.data}
-                className="pl-2 sm:basis-1/4 lg:basis-1/5"
+                className="pl-2 sm:basis-1/2 md:basis-1/4 lg:basis-1/5"
               >
                 <ScheduleCard dailySchedule={dailySchedule} />
               </CarouselItem>

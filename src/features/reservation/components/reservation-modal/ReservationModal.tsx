@@ -44,7 +44,7 @@ function ReservationModal({ scheduleReservation }: ReservationModalProps) {
     <>
       <Button
         onClick={() => setShouldFetch(true)}
-        className="flex h-fit cursor-pointer flex-col items-stretch gap-1 rounded-md bg-gray-200 px-3 py-2 break-all text-gray-900 shadow-gray-400 duration-300 hover:shadow-md"
+        className="flex h-fit cursor-pointer flex-col items-stretch gap-1 rounded-md bg-gray-200 px-3 py-3 text-gray-900 shadow-gray-400 duration-300 hover:shadow-md md:py-2"
       >
         <div className="self-start text-xs">
           {scheduleReservation.horaInicio} - {scheduleReservation.horaFim}

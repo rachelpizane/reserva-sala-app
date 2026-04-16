@@ -30,7 +30,7 @@ function ScheduleCard({ dailySchedule }: ScheduleCardProps) {
           {formattedDate}
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex h-full w-full flex-col gap-3 p-4 pt-0">
+      <CardContent className="flex h-full flex-col gap-2 p-4 pt-0">
         {dailySchedule.reservas.map((reservation) => (
           <ReservationModal
             key={reservation.id}

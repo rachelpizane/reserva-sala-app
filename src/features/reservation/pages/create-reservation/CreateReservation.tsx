@@ -71,9 +71,9 @@ function CreateReservation() {
 
         <form
           onSubmit={methods.handleSubmit(onSubmit)}
-          className="flex flex-col gap-18"
+          className="flex flex-col gap-15"
         >
-          <FieldGroup className="flex flex-col gap-2">
+          <FieldGroup className="flex flex-col gap-1">
             <AppSelect<ReservationSchema>
               label="Sala"
               name="salaId"

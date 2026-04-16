@@ -7,9 +7,9 @@ function Home() {
   const { toRoomCreate, toReservationCreate } = useAppNavigate()
 
   return (
-    <section className="flex w-full flex-col gap-5 md:max-w-6xl">
+    <section className="flex w-full max-w-full flex-col gap-5 md:max-w-6xl">
       <header className="flex flex-col gap-6 md:flex-row md:justify-between">
-        <AppButton onClick={toRoomCreate}>
+        <AppButton onClick={toRoomCreate} className="py-8">
           <CirclePlus strokeWidth={2.5} className="scale-120" />
           Cadastrar Sala
         </AppButton>
