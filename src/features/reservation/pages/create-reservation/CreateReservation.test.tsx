@@ -3,10 +3,10 @@ import { screen } from "@testing-library/react"
 import { renderWithReservationForm } from "@/tests/providers/render.utils"
 import CreateReservation from "./CreateReservation"
 import userEvent from "@testing-library/user-event"
-import AppRoutes from "@/routes/AppRoutes"
 import { server } from "@/tests/mocks/server.mock"
 import { http, HttpResponse } from "msw"
 import { formatBrazilianDate } from "@/utils/date"
+import App from "@/App"
 
 const campos = {
   sala: { label: "Sala", testId: "select-salaId" },
@@ -159,7 +159,7 @@ describe(CreateReservation.name, () => {
 
   describe("Submissão do Formulário", () => {
     it("deve submeter corretamente", async () => {
-      renderWithReservationForm(<AppRoutes />)
+      renderWithReservationForm(<App />)
       await submeterFormularioReserva()
 
       expect(await screen.findByText(/sucesso/i)).toBeInTheDocument()
@@ -179,7 +179,7 @@ describe(CreateReservation.name, () => {
         })
       )
 
-      renderWithReservationForm(<AppRoutes />)
+      renderWithReservationForm(<App />)
       await submeterFormularioReserva()
 
       expect(await screen.findByText(/conflito/i)).toBeInTheDocument()
@@ -199,7 +199,7 @@ describe(CreateReservation.name, () => {
         })
       )
 
-      renderWithReservationForm(<AppRoutes />)
+      renderWithReservationForm(<App />)
       await submeterFormularioReserva()
 
       expect(
@@ -218,7 +218,7 @@ describe(CreateReservation.name, () => {
         })
       )
 
-      renderWithReservationForm(<AppRoutes />)
+      renderWithReservationForm(<App />)
       await submeterFormularioReserva()
 
       expect(

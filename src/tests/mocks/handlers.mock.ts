@@ -39,6 +39,16 @@ export const handlers = [
       },
     })
   }),
+  http.post(apiUrl("/salas"), async ({ request }) => {
+    const data = await request.json()
+    return HttpResponse.json(
+      {
+        id: "4bfa0c79-d5ea-4bce-aaec-f87bfb2318de",
+        data,
+      },
+      { status: 201 }
+    )
+  }),
   http.get(apiUrl("/salas"), () => {
     return HttpResponse.json([
       {

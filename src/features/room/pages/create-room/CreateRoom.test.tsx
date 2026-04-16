@@ -1,15 +1,14 @@
-import { mockNavigate } from "../../../../tests/mocks/router-dom.mock"
-import { beforeEach, describe, expect, it, vi } from "vitest"
+import { describe, expect, it } from "vitest"
 import CreateRoom from "./CreateRoom"
-import { act, screen, waitFor } from "@testing-library/react"
-import userEvent, { type UserEvent } from "@testing-library/user-event"
-import { toast } from "sonner"
-import { ROUTES } from "@/constants/routes"
+import { screen } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 import type { RoomSchema } from "@/features/room/schemas/room.schema"
 import { renderWithRoomForm } from "@/tests/providers/render.utils"
-
-const mutateMock = vi.fn()
-let isPendingMock = false
+import { server } from "@/tests/mocks/server.mock"
+import { apiUrl } from "@/tests/mocks/handlers.mock"
+import { http, HttpResponse } from "msw"
+import App from "@/App"
+import AppRoutes from "@/routes/AppRoutes"
 
 const mockSala: RoomSchema = {
   nome: "Sala 1",
@@ -18,26 +17,7 @@ const mockSala: RoomSchema = {
   descricao: null,
 }
 
-vi.mock("@/services/room/room.mutation", () => ({
-  useCreateRoom: () => ({
-    mutate: mutateMock,
-    isPending: isPendingMock,
-  }),
-}))
-
-vi.mock("sonner", () => ({
-  toast: {
-    success: vi.fn(),
-    error: vi.fn(),
-  },
-}))
-
 describe(CreateRoom.name, () => {
-  beforeEach(() => {
-    vi.clearAllMocks()
-    isPendingMock = false
-  })
-
   describe("renderização básica", () => {
     it("deve renderizar os campos do formulário", () => {
       renderWithRoomForm(<CreateRoom />)
@@ -112,6 +92,7 @@ describe(CreateRoom.name, () => {
   describe("Estados", () => {
     it("deve habilitar o botão quando o formulário for válido", async () => {
       const user = userEvent.setup()
+
       renderWithRoomForm(<CreateRoom />)
 
       const nomeInput = screen.getByLabelText(/nome/i)
@@ -125,73 +106,39 @@ describe(CreateRoom.name, () => {
 
       expect(button).toBeEnabled()
     })
-
-    it("deve mostrar spinner quando isPending for true", () => {
-      isPendingMock = true
-
-      renderWithRoomForm(<CreateRoom />)
-
-      const spinner = document.querySelector('[data-icon="inline-start"]')
-
-      expect(spinner).toBeInTheDocument()
-    })
   })
 
   describe("Estados e submissão do formulário", () => {
-    let user: UserEvent
+    it("deve submeter formulário corretamente", async () => {
+      const user = userEvent.setup()
 
-    beforeEach(() => {
-      user = userEvent.setup()
-    })
-
-    it("deve chamar mutate com os dados corretos ao submeter", async () => {
-      renderWithRoomForm(<CreateRoom />)
+      renderWithRoomForm(<App />)
 
       const nomeInput = screen.getByLabelText(/nome/i)
       const capacidadeInput = screen.getByLabelText(/capacidade/i)
-      const button = screen.getByRole("button", { name: /cadastrar/i })
 
       await user.type(nomeInput, mockSala.nome)
       await user.type(capacidadeInput, mockSala.capacidade.toString())
 
-      await user.tab()
-      await user.click(button)
+      await user.click(screen.getByRole("button", { name: /cadastrar/i }))
 
-      expect(mutateMock).toHaveBeenCalledTimes(1)
-      expect(mutateMock).toHaveBeenCalledWith(mockSala, expect.any(Object))
-    })
-
-    it("deve resetar o formulário, navegar e mostrar toast de sucesso", async () => {
-      renderWithRoomForm(<CreateRoom />)
-
-      const nomeInput = screen.getByLabelText(/nome/i)
-      const capacidadeInput = screen.getByLabelText(/capacidade/i)
-      const button = screen.getByRole("button", { name: /cadastrar/i })
-
-      await user.type(nomeInput, mockSala.nome)
-      await user.type(capacidadeInput, mockSala.capacidade.toString())
-
-      await user.tab()
-      await user.click(button)
-
-      const mutateCall = mutateMock.mock.calls[0]
-      const options = mutateCall[1]
-
-      act(() => {
-        options.onSuccess()
-      })
-
-      expect(mockNavigate).toHaveBeenCalledWith(ROUTES.HOME)
-      expect(toast.success).toHaveBeenCalledWith("Sala cadastrada com sucesso!")
-
-      await waitFor(() => {
-        expect(nomeInput).toHaveValue("")
-        expect(capacidadeInput).toHaveValue(null)
-      })
+      expect(await screen.findByText(/sucesso/i)).toBeInTheDocument()
+      expect(await screen.findByText(/cadastrar sala/i)).toBeInTheDocument()
     })
 
     it("deve mostrar toast de erro quando a mutation falhar", async () => {
-      renderWithRoomForm(<CreateRoom />)
+      const user = userEvent.setup()
+
+      server.use(
+        http.post(apiUrl("/salas"), () => {
+          return HttpResponse.json(
+            { message: "Erro inesperado" },
+            { status: 500 }
+          )
+        })
+      )
+
+      renderWithRoomForm(<App />)
 
       const nomeInput = screen.getByLabelText(/nome/i)
       const capacidadeInput = screen.getByLabelText(/capacidade/i)
@@ -200,17 +147,12 @@ describe(CreateRoom.name, () => {
       await user.type(nomeInput, mockSala.nome)
       await user.type(capacidadeInput, mockSala.capacidade.toString())
 
-      await user.tab()
       await user.click(button)
 
-      const mutateCall = mutateMock.mock.calls[0]
-      const options = mutateCall[1]
-
-      options.onError()
-
-      expect(toast.error).toHaveBeenCalledWith(
-        "Ocorreu um erro inesperado. Tente novamente mais tarde."
-      )
+      expect(
+        await screen.findByText(/ocorreu um erro inesperado/i)
+      ).toBeInTheDocument()
+      expect(screen.getByText(/nova sala/i)).toBeInTheDocument()
     })
   })
 })

@@ -60,7 +60,7 @@ function AppDatePicker<T extends FieldValues>({
           error={fieldState.error}
         >
           <Popover>
-            <PopoverTrigger asChild>
+            <PopoverTrigger data-testid={`datepicker-${name}`} asChild>
               <Button
                 id={name}
                 variant="outline"

@@ -69,3 +69,12 @@ export function formatLongDate(date: Date): string {
 export function formatTime(date: Date): string {
   return format(date, "HH:mm")
 }
+
+export function formatFullDateWithWeekday(date: Date): string {
+  return format(date, "PPPP", { locale: ptBR })
+}
+
+export function getFirstDayOfNextMonth(): Date {
+  const today = getTodayDate()
+  return new Date(today.getFullYear(), today.getMonth() + 1, 1)
+}

@@ -15,7 +15,6 @@ export function useScheduleCarousel(
 
   const handleSelect = useCallback(() => {
     if (!api) return
-
     if (
       !api.canScrollNext() &&
       schedule.hasNextPage &&
@@ -48,6 +47,7 @@ export function useScheduleCarousel(
     if (!api) return
 
     api.on("select", handleSelect)
+    handleSelect()
 
     return () => {
       api.off("select", handleSelect)

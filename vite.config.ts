@@ -20,6 +20,7 @@ export default defineConfig({
       include: ["src/**/*.{ts,tsx}"],
       exclude: [
         "src/components/ui/**",
+        "**/types/**",
         "src/routes/**",
         "**/*.mock.{ts,tsx}",
         "src/services/api.ts",
